@@ -1,0 +1,60 @@
+// 스프링부트를 위한 설정 //
+buildscript {
+    ext{
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+// 위에 선언한 플러그인들의 의존성을 적용할 것인지 결정하는 코드 : 자바+스프링부트를 사용하기 위한 필수플러그인
+apply plugin:'java'
+apply plugin:'eclipse'
+apply plugin:'org.springframework.boot'
+apply plugin:'io.spring.dependency-management' //스프링부트의 의존성을 관리(꼭추가)
+
+repositories{
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web') //버전을 명시하지 않아야만 위에 작성한 ${springBootVersion}를 따라간다
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+// 맨처음 선택한 언어 : java
+/*
+plugins {
+    id 'java'
+}
+
+*/
+
+group 'com.jojold.book'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8 //JDK 버전
+
+repositories {
+    mavenCentral()
+}
+/*
+프로젝트 생성 시 만들어진 부분인데 책에는 안썼음
+dependencies {
+    testCompile group : 'junit', name:'junit' ,version:'4.12' // 근데 책에 이 부분은 나왔었는데 아마
+                                                                 인텔리제이 버전차이인듯
+    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+*/
+
+//// 여기까지 자바 개발에 가장 기초적인 설정만 되어있는 상태 ////
