@@ -1,7 +1,8 @@
-// 스프링부트를 위한 설정 //
+// 스프링부트를 위한 설정 : https://jojoldu.tistory.com/539 에서 버전변경 //
 buildscript {
     ext{
-        springBootVersion = '2.1.7.RELEASE'
+//        springBootVersion = '2.1.7.RELEASE'
+          springBootVersion = '2.4.1.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -12,37 +13,70 @@ buildscript {
     }
 }
 
-// 위에 선언한 플러그인들의 의존성을 적용할 것인지 결정하는 코드 : 자바+스프링부트를 사용하기 위한 필수플러그인
-apply plugin:'java'
-apply plugin:'eclipse'
-apply plugin:'org.springframework.boot'
-apply plugin:'io.spring.dependency-management' //스프링부트의 의존성을 관리(꼭추가)
+// 맨처음 선택한 언어 : java
+
+plugins {
+    id 'org.springframework.boot' version '2.4.1' // RELEASE 삭제
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
 
 repositories{
     mavenCentral()
     jcenter()
 }
 
+
+// 위에 선언한 플러그인들의 의존성을 적용할 것인지 결정하는 코드 : 자바+스프링부트를 사용하기 위한 필수플러그인
+apply plugin:'java'
+apply plugin:'eclipse'
+apply plugin:'org.springframework.boot'
+apply plugin:'io.spring.dependency-management' //스프링부트의 의존성을 관리(꼭추가)
+
 dependencies {
+//  내가 작성
     compile('org.springframework.boot:spring-boot-starter-web') //버전을 명시하지 않아야만 위에 작성한 ${springBootVersion}를 따라간다
+    compile('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile group : 'junit', name:'junit' ,version:'4.12'
+
+    //(3)
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-mustache')
+
+    // lombok
+    implementation('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+    testImplementation('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+
+//    jojold 블로그에서 ver2020 가져옴
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation("org.mariadb.jdbc:mariadb-java-client")
+    implementation('com.h2database:h2')
+
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-client') // 권한 관련
+    implementation('org.springframework.session:spring-session-jdbc') // 권한 관련
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation("org.springframework.security:spring-security-test") // 권한 관련
+
+
 }
 
-// 맨처음 선택한 언어 : java
-/*
-plugins {
-    id 'java'
-}
 
-*/
+
 
 group 'com.jojold.book'
-version '1.0-SNAPSHOT'
+version '1.0.4-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
 sourceCompatibility = 1.8 //JDK 버전
 
-repositories {
-    mavenCentral()
+
+//for Junit5
+test {
+    useJUnitPlatform()
 }
+
 /*
 프로젝트 생성 시 만들어진 부분인데 책에는 안썼음
 dependencies {
@@ -52,9 +86,6 @@ dependencies {
     //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
-test {
-    useJUnitPlatform()
-}
 */
 
 //// 여기까지 자바 개발에 가장 기초적인 설정만 되어있는 상태 ////
