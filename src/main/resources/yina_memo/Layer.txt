@@ -1,0 +1,31 @@
+Spring 웹 계층
+
+### Web Layer ###
+- @Controller
+- JSP/Freemarker등의 뷰템플릿
+- @Filter, @Interceptor, @ControllerAdvice 등 ---> 외부 요청과 응답에 대한 전반적인 영역
+
+
+### Service Layer ###
+- @Service
+- @Transactional 이 사용되는 영역
+- Controller와 Dao의 중간영역
+
+
+### Repository Layer ###
+- Database와 같은 데이터저장소에 접근하는 영역
+- DAO영역
+
+### Dtos Layer ###
+- Data Transfer Object : 계층간 데이터 교환을 위한 객체
+- 뷰 템플릿 엔진에서 사용될 객체나 Repository Layer에서 결과로 넘겨준 객체 등
+
+### Domain Layer ###
+- 도메인모델 : 도메인이라 불리는 개발 대상을 모든 사람들이 동일한 관점에서 이해할 수 있고, 공유할 수 있도록 단순화 시킨 것
+  ex) 택시app --> 배차, 탑승, 요금 등등이 모두 도메인이 될 수 있다
+- JPA에서 @Entity가 사용되는 영역이 도메인모델이다.
+- 단, 무조건 DB의 테이블과 관계가 있어야만 하는 것은 아니다. VO처럼 값객체들도 도메인모델에 해당되기때문
+
+
+-------------------------> Spring의 5가지 레이어(Web, Service, Repository, Dto, Domain)에서
+                           비즈니스 처리를 담당하는 곳이 Domain
